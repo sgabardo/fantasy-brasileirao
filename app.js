@@ -9,7 +9,7 @@ const POS_LABEL = { GOL: 'GOL', LAT: 'LAT', ZAG: 'ZAG', MEI: 'MEI', ATA: 'ATA' }
 
 // ---------- API ----------
 async function api(action, params = {}) {
-  const body = new URLSearchParams({ action, ...params });
+  const body = new URLSearchParams({ action, email: EMAIL, ...params });
   const res = await fetch(API_URL, { method: 'POST', body });
   const json = await res.json();
   if (!json.ok) throw new Error(json.error || 'Erro na API');
