@@ -1,7 +1,7 @@
 // ============================================================
 // FANTASY BRASILEIRÃO — Front-end (versão de visualização geral)
 // ============================================================
-const API_URL = 'https://script.google.com/macros/s/AKfycbxPv_W-w93kSp37I_VUjc2rLWknco51ADUeIZi-L92Q4RLt42tiIQp4RWM5i88vQ0HMiw/exec'; // ← troque aqui
+const API_URL = 'https://script.google.com/macros/s/AKfycbw49ZmcNopQPyOvNoWzyeJIf3qeCk7N6bkqYb1HgLptMdsVXklI6qRfZjogPNIuCtAv/exec'; // ← troque aqui
 
 const state = { franquias: [], jogadores: [], elencos: [], classificacao: [], rodadas: [] };
 const POS_LABEL = { GOL: 'GOL', LAT: 'LAT', ZAG: 'ZAG', MEI: 'MEI', ATA: 'ATA' };
