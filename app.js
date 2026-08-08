@@ -2,6 +2,7 @@
 // FANTASY BRASILEIRÃO — Front-end (versão de visualização geral)
 // ============================================================
 const API_URL = 'https://script.google.com/macros/s/AKfycbw49ZmcNopQPyOvNoWzyeJIf3qeCk7N6bkqYb1HgLptMdsVXklI6qRfZjogPNIuCtAv/exec'; // ← troque aqui
+const EMAIL = 'sandro@fantasy.com'; // ← adicione esta linha
 
 const state = { franquias: [], jogadores: [], elencos: [], classificacao: [], rodadas: [] };
 const POS_LABEL = { GOL: 'GOL', LAT: 'LAT', ZAG: 'ZAG', MEI: 'MEI', ATA: 'ATA' };
