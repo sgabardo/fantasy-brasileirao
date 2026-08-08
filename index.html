@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fantasy Brasileirão</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">⚽</span>
+      <h1>Fantasy Brasileirão</h1>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn active" data-view="dashboard">Classificação</button>
+      <button class="nav-btn" data-view="franquias">Franquias</button>
+      <button class="nav-btn" data-view="elencos">Elencos</button>
+      <button class="nav-btn" data-view="mercado">Mercado</button>
+      <button class="nav-btn" data-view="rodada">Rodada</button>
+    </nav>
+    <button class="refresh" id="btnRefresh">↻ Atualizar</button>
+  </header>
+
+  <main id="app">
+    <section id="view-dashboard" class="view active">
+      <h2>Classificação</h2>
+      <div id="classificacao" class="table-wrap"></div>
+    </section>
+
+    <section id="view-franquias" class="view">
+      <h2>Franquias</h2>
+      <div id="franquias" class="grid"></div>
+    </section>
+
+    <section id="view-elencos" class="view">
+      <h2>Elencos</h2>
+      <div class="controls">
+        <select id="selElencoFranquia"></select>
+      </div>
+      <div id="elenco" class="table-wrap"></div>
+    </section>
+
+    <section id="view-mercado" class="view">
+      <h2>Mercado</h2>
+      <div id="mercado" class="grid-2">
+        <div class="card">
+          <h3>Contratação</h3>
+          <div class="form-row">
+            <select id="mercadoFranquia"></select>
+            <select id="mercadoJogador"></select>
+            <button id="btnContratar">Contratar</button>
+          </div>
+          <p class="hint">Jogador com jogo no Cartola = contratação direta. Zerado = waiver (24h).</p>
+          <div id="msgContratar" class="msg"></div>
+        </div>
+        <div class="card">
+          <h3>Troca entre managers</h3>
+          <div class="form-row">
+            <select id="trocaFranquiaA"></select>
+            <select id="trocaFranquiaB"></select>
+          </div>
+          <div class="form-row">
+            <input id="trocaJogadoresA" placeholder="IDs de A (até 2, separados por vírgula)">
+            <input id="trocaJogadoresB" placeholder="IDs de B (até 2, separados por vírgula)">
+          </div>
+          <button id="btnTrocar">Registrar troca</button>
+          <div id="msgTroca" class="msg"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-rodada" class="view">
+      <h2>Rodada</h2>
+      <div id="rodada" class="placeholder">Selecione uma rodada para ver escalações e resultados.</div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
