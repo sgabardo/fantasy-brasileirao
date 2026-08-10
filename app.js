@@ -171,3 +171,82 @@ function toast(msg, err = false) {
 }
 
 carregarTudo();
+
+// ===== ESCALAÇÃO =====
+let escElenco = []; // jogadores da franquia logada
+
+async function carregarEscalacao() {
+  const franquia = getFranquiaLogada();
+  if (!franquia) { alert('Selecione sua franquia primeiro.'); return; }
+  const elenco = await api({ action: 'getElenco', franquia_id: franquia.id });
+  escElenco = elenco.jogadores || [];
+  montarSlots();
+  montarCapitaoVeto();
+}
+
+function montarSlots() {
+  const formacao = document.getElementById('esc-formacao').value;
+  const posicoes = { '442': ['GOL','LAT','LAT','ZAG','ZAG','MEI','MEI','MEI','MEI','ATA','ATA'],
+                     '433': ['GOL','LAT','LAT','ZAG','ZAG','MEI','MEI','MEI','ATA','ATA','ATA'],
+                     '451': ['GOL','LAT','LAT','ZAG','ZAG','MEI','MEI','MEI','MEI','MEI','ATA'],
+                     '532': ['GOL','LAT','LAT','LAT','ZAG','ZAG','MEI','MEI','MEI','ATA','ATA'],
+                     '541': ['GOL','LAT','LAT','LAT','LAT','ZAG','ZAG','MEI','MEI','MEI','ATA'],
+                     '343': ['GOL','LAT','LAT','ZAG','ZAG','ZAG','MEI','MEI','MEI','MEI','ATA'],
+                     '352': ['GOL','LAT','LAT','ZAG','ZAG','ZAG','MEI','MEI','MEI','MEI','ATA'] };
+  const slots = posicoes[formacao] || posicoes['442'];
+  const cont = document.getElementById('esc-titulares');
+  cont.innerHTML = '';
+  slots.forEach((pos, i) => {
+    const div = document.createElement('div');
+    div.className = 'esc-slot';
+    div.innerHTML = `<div class="slot-pos">${pos} ${i+1}</div>
+      <select data-pos="${pos}">
+        <option value="">—</option>
+        ${escElenco.filter(j => j.posicao === pos).map(j => `<option value="${j.id}">${j.nome}</option>`).join('')}
+      </select>`;
+    cont.appendChild(div);
+  });
+  // reservas
+  const rcont = document.getElementById('esc-reservas');
+  rcont.innerHTML = '';
+  for (let i = 0; i < 7; i++) {
+    const div = document.createElement('div');
+    div.className = 'esc-slot';
+    div.innerHTML = `<div class="slot-pos">RESERVA ${i+1}</div>
+      <select>
+        <option value="">—</option>
+        ${escElenco.map(j => `<option value="${j.id}">${j.nome} (${j.posicao})</option>`).join('')}
+      </select>`;
+    rcont.appendChild(div);
+  }
+}
+
+function montarCapitaoVeto() {
+  const cap = document.getElementById('esc-capitao');
+  cap.innerHTML = '<option value="">Selecione o capitão</option>' +
+    escElenco.map(j => `<option value="${j.id}">${j.nome}</option>`).join('');
+  const veto = document.getElementById('esc-veto');
+  veto.innerHTML = '<option value="">Selecione o jogador a vetar</option>' +
+    escElenco.map(j => `<option value="${j.id}">${j.nome}</option>`).join('');
+}
+
+document.getElementById('esc-formacao').addEventListener('change', montarSlots);
+document.getElementById('esc-limpar').addEventListener('click', () => { montarSlots(); });
+
+document.getElementById('esc-salvar').addEventListener('click', async () => {
+  const franquia = getFranquiaLogada();
+  const titulares = [...document.querySelectorAll('#esc-titulares select')].map(s => s.value).filter(Boolean);
+  const reservas = [...document.querySelectorAll('#esc-reservas select')].map(s => s.value).filter(Boolean);
+  const capitao = document.getElementById('esc-capitao').value;
+  const rodada = document.getElementById('esc-rodada').textContent;
+  const r = await api({ action: 'salvarEscalacao', franquia_id: franquia.id, rodada, titulares, reservas, capitao_id: capitao, formacao: document.getElementById('esc-formacao').value });
+  document.getElementById('esc-msg').textContent = r.ok ? 'Escalação salva!' : (r.error || 'Erro ao salvar.');
+});
+
+document.getElementById('esc-veto-salvar').addEventListener('click', async () => {
+  const franquia = getFranquiaLogada();
+  const veto = document.getElementById('esc-veto').value;
+  const rodada = document.getElementById('esc-rodada').textContent;
+  const r = await api({ action: 'registrarVeto', mandante_id: franquia.id, rodada, jogador_vetado_id: veto });
+  document.getElementById('esc-msg').textContent = r.ok ? 'Veto registrado!' : (r.error || 'Erro ao registrar veto.');
+});
