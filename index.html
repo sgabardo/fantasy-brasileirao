@@ -70,6 +70,52 @@
       </div>
     </section>
 
+    <!-- ABA ESCALAÇÃO -->
+<section id="aba-escalacao" class="aba-conteudo" style="display:none;">
+  <div class="card">
+    <h2>Escalação — Rodada <span id="esc-rodada">1</span></h2>
+    <div class="esc-controles">
+      <label>Formação
+        <select id="esc-formacao">
+          <option value="442">4-4-2</option>
+          <option value="433">4-3-3</option>
+          <option value="451">4-5-1</option>
+          <option value="532">5-3-2</option>
+          <option value="541">5-4-1</option>
+          <option value="343">3-4-3</option>
+          <option value="352">3-5-2</option>
+        </select>
+      </label>
+      <button id="esc-limpar" class="btn-secundario">Limpar</button>
+      <button id="esc-salvar" class="btn-primario">Salvar Escalação</button>
+    </div>
+    <p id="esc-msg" class="msg"></p>
+  </div>
+
+  <div class="card">
+    <h3>Titulares (11)</h3>
+    <div id="esc-titulares" class="esc-slots"></div>
+  </div>
+
+  <div class="card">
+    <h3>Reservas (até 7)</h3>
+    <div id="esc-reservas" class="esc-slots"></div>
+  </div>
+
+  <div class="card">
+    <h3>Capitão</h3>
+    <select id="esc-capitao"><option value="">Selecione o capitão</option></select>
+    <p class="dica">O capitão pontua 1,5x. Se for vetado pelo adversário, pontua 1x.</p>
+  </div>
+
+  <div class="card">
+    <h3>Veto (mandante)</h3>
+    <select id="esc-veto"><option value="">Selecione o jogador a vetar</option></select>
+    <p class="dica">Você veta um jogador do adversário. Ele pode jogar, mas não pode ser capitão.</p>
+    <button id="esc-veto-salvar" class="btn-secundario">Registrar Veto</button>
+  </div>
+</section>
+
     <section id="view-rodada" class="view">
       <h2>Rodada</h2>
       <div id="rodada" class="placeholder">Selecione uma rodada para ver escalações e resultados.</div>
