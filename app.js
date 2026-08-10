@@ -176,8 +176,8 @@ carregarTudo();
 let escElenco = []; // jogadores da franquia logada
 
 async function carregarEscalacao() {
-  const franquia = getFranquiaLogada();
-  if (!franquia) { alert('Selecione sua franquia primeiro.'); return; }
+const franquia = state.franquias.find(f => f.email === EMAIL);
+if (!franquia) { alert('Franquia não encontrada para este e-mail.'); return; }
   const elenco = await api({ action: 'getElenco', franquia_id: franquia.id });
   escElenco = elenco.jogadores || [];
   montarSlots();
