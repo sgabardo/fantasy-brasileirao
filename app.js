@@ -176,9 +176,9 @@ carregarTudo();
 let escElenco = []; // jogadores da franquia logada
 
 async function carregarEscalacao() {
-const franquia = state.franquias.find(f => f.email === EMAIL);
-if (!franquia) { alert('Franquia não encontrada para este e-mail.'); return; }
-  const elenco = await api({ action: 'getElenco', franquia_id: franquia.id });
+  const franquia = state.franquias.find(f => f.email === EMAIL);
+  if (!franquia) { alert('Franquia não encontrada.'); return; }
+  const elenco = await api('getElenco', { franquia_id: franquia.id });
   escElenco = elenco.jogadores || [];
   montarSlots();
   montarCapitaoVeto();
@@ -244,7 +244,7 @@ document.getElementById('esc-salvar').addEventListener('click', async () => {
 });
 
 document.getElementById('esc-veto-salvar').addEventListener('click', async () => {
-  const franquia = getFranquiaLogada();
+  const franquia = state.franquias.find(f => f.email === EMAIL);
   const veto = document.getElementById('esc-veto').value;
   const rodada = document.getElementById('esc-rodada').textContent;
   const r = await api({ action: 'registrarVeto', mandante_id: franquia.id, rodada, jogador_vetado_id: veto });
